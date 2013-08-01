@@ -73,7 +73,7 @@ public class SalesforceTestParent extends FunctionalTestCase {
 		
 	}
 	
-	protected void assertBatchSucessAndGetSObjectIds(BatchResult batchResult) {
+	protected void assertBatchSuccessAndGetSObjectIds(BatchResult batchResult) {
 		
 		List<String> createdSObjectsIds = new ArrayList<String>();
 		
@@ -96,7 +96,7 @@ public class SalesforceTestParent extends FunctionalTestCase {
 
 	}
 	
-	protected void assertBatchSucessAndCompareSObjectIds(BatchResult batchResult, List<String> createdSObjectsIds) {
+	protected void assertBatchSuccessAndCompareSObjectIds(BatchResult batchResult, List<String> createdSObjectsIds) {
 		
 		boolean isSuccess = true;
 		Result[] results = batchResult.getResult();
@@ -115,7 +115,7 @@ public class SalesforceTestParent extends FunctionalTestCase {
 
 	}
     
-	protected void assertBatchSucessAndUpdatedSObjectId(BatchResult batchResult) {
+	protected void assertBatchSuccessAndUpdatedSObjectId(BatchResult batchResult) {
 		
 		List<String> sObjectsIds = new ArrayList<String>();
 		

@@ -291,7 +291,7 @@ public class SalesforceConnector extends BaseSalesforceConnector {
      * @param proxyPort     Port of the proxy
      * @param proxyUsername Username used to authenticate against the proxy
      * @param proxyPassword Password used to authenticate against the proxy
-     * @param sessionId  This value could be used for specifing an active Salesforce session.
+     * @param sessionId  This value could be used for specifying an active Salesforce session.
      * Please take into account you must specify all the connection parameters anyway since they will be used
      * in case of needing a reconnection.
      * @param serviceEndpoint Specifies the service endpoint. This value will only be used in case of using sessionId configuration property.

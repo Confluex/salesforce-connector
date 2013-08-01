@@ -13,26 +13,15 @@ package org.mule.modules.salesforce.automation.testcases;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mule.api.MuleEvent;
-import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 
 import com.sforce.async.BatchInfo;
-import com.sforce.async.BatchResult;
-import com.sforce.async.Result;
-import com.sforce.soap.partner.SaveResult;
-
 
 
 public class CreateBulkTestCases extends SalesforceTestParent {
@@ -90,7 +79,7 @@ public class CreateBulkTestCases extends SalesforceTestParent {
 	
 			assertTrue(batchInfo.getState().equals(com.sforce.async.BatchStateEnum.Completed));
 			
-			assertBatchSucessAndGetSObjectIds(getBatchResult(batchResultFlow)); 
+			assertBatchSuccessAndGetSObjectIds(getBatchResult(batchResultFlow));
 	        
 		} catch (Exception e) {
 			e.printStackTrace();

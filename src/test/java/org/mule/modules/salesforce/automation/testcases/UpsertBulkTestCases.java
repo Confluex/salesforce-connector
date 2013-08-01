@@ -13,18 +13,13 @@ package org.mule.modules.salesforce.automation.testcases;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
-import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 
 import com.sforce.async.BatchInfo;
@@ -102,7 +97,7 @@ public class UpsertBulkTestCases extends SalesforceTestParent {
 	
 			assertTrue(batchInfo.getState().equals(com.sforce.async.BatchStateEnum.Completed));
 			
-			assertBatchSucessAndUpdatedSObjectId(getBatchResult(batchResultFlow)); 
+			assertBatchSuccessAndUpdatedSObjectId(getBatchResult(batchResultFlow));
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

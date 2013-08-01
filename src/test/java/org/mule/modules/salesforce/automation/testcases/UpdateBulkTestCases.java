@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
-import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 
 import com.sforce.async.BatchInfo;
@@ -126,7 +125,7 @@ public class UpdateBulkTestCases extends SalesforceTestParent {
 	
 			assertTrue(batchInfo.getState().equals(com.sforce.async.BatchStateEnum.Completed));
 			
-			assertBatchSucessAndCompareSObjectIds(getBatchResult(batchResultFlow), createdSObjectsIds); 
+			assertBatchSuccessAndCompareSObjectIds(getBatchResult(batchResultFlow), createdSObjectsIds);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

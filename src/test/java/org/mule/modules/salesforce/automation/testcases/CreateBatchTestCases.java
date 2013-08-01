@@ -102,7 +102,7 @@ public class CreateBatchTestCases extends SalesforceTestParent {
 	
 			assertTrue(batchInfo.getState().equals(com.sforce.async.BatchStateEnum.Completed));
 			
-			assertBatchSucessAndGetSObjectIds(getBatchResult(batchResultFlow)); 
+			assertBatchSuccessAndGetSObjectIds(getBatchResult(batchResultFlow));
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
