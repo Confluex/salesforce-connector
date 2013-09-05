@@ -438,8 +438,8 @@ public class SalesforceModuleTest {
         
         result = delegate.getPage();
         assertEquals(1, result.size());
-        
-        assertNull(delegate.getPage());
+
+        assertTrue(delegate.getPage().get(0).isEmpty());
     }
 
     @Test
