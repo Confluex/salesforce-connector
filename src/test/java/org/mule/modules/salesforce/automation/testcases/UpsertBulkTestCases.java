@@ -13,7 +13,9 @@ package org.mule.modules.salesforce.automation.testcases;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,8 +37,10 @@ public class UpsertBulkTestCases extends SalesforceTestParent {
 	private MessageProcessor batchInfoFlow;
 	private MessageProcessor batchResultFlow;
 	private MessageProcessor deleteFlow;
-	
-	
+
+    Map<String, Object> refAccountTestObjects;
+    String refAccountId;
+
 	@Before
 	public void setUp() {
 		
@@ -47,13 +51,17 @@ public class UpsertBulkTestCases extends SalesforceTestParent {
 		deleteFlow = lookupFlowConstruct("delete-from-message");
     	
 		try {
-			
+
+            refAccountId = createAccountToRef();
+            MuleEvent response;
+
 			testObjects = (HashMap<String,Object>) context.getBean("upsertBulkTestData");
 
-	        MuleEvent response = createSingleFlow.process(getTestEvent(testObjects));
+	        response = createSingleFlow.process(getTestEvent(testObjects));
 	        SaveResult saveResult = (SaveResult) response.getMessage().getPayload();
 			((HashMap<String,Object>) context.getBean("upsertBulkSObjectToBeUpdated")).put("Id", saveResult.getId());
-  
+            ((HashMap<String,Object>) context.getBean("upsertBulkSObjectToBeUpdated")).put("WhatId", refAccountId);
+            ((HashMap<String,Object>) context.getBean("upsertBulkSObjectToBeInserted")).put("WhatId", refAccountId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -61,7 +69,19 @@ public class UpsertBulkTestCases extends SalesforceTestParent {
      
 	}
 
-	@After
+    private String createAccountToRef() throws Exception {
+        refAccountTestObjects = (HashMap<String, Object>) context.getBean("upsertAccountToRefSObjectMap");
+        MuleEvent response = createSingleFlow.process(getTestEvent(refAccountTestObjects));
+        final String refAccountId = response.getMessage().getPayload(SaveResult.class).getId();
+
+        refAccountTestObjects.put("idsToDeleteFromMessage", new ArrayList<String>() {{
+            add(refAccountId);
+        }});
+
+        return refAccountId;
+    }
+
+    @After
 	public void tearDown() {
 		
 		try {
@@ -69,6 +89,10 @@ public class UpsertBulkTestCases extends SalesforceTestParent {
 			if (testObjects.containsKey("idsToDeleteFromMessage")) {		
 				deleteFlow.process(getTestEvent(testObjects));	
 			}
+
+            if (refAccountTestObjects.containsKey("idsToDeleteFromMessage")) {
+                deleteFlow.process(getTestEvent(refAccountTestObjects));
+            }
 
 		} catch (Exception e) {
 				e.printStackTrace();
