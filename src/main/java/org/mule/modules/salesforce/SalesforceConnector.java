@@ -344,8 +344,7 @@ public class SalesforceConnector extends BaseSalesforceConnector {
         }
 
         try {
-            String restEndpoint = "https://" + (new URL(connectorConfig.getServiceEndpoint())).getHost() + "/services/async/26.0";
-            connectorConfig.setRestEndpoint(restEndpoint);
+            connectorConfig.setRestEndpoint(generateRestEndpointUrl(connectorConfig.getServiceEndpoint()));
             bulkConnection = new BulkConnection(connectorConfig);
         } catch (AsyncApiException e) {
             throw new org.mule.api.ConnectionException(ConnectionExceptionCode.UNKNOWN, e.getExceptionCode().toString(), e.getMessage(), e);
@@ -355,6 +354,13 @@ public class SalesforceConnector extends BaseSalesforceConnector {
         
         this.processSubscriptions();
     }
+
+    private String generateRestEndpointUrl(String serviceEndpoint) throws MalformedURLException {
+        final URL baseUrl = new URL(serviceEndpoint);
+        final String portClause = (baseUrl.getPort() > 0) ? ":" + baseUrl.getPort() : "";
+        return "https://" + baseUrl.getHost() + portClause + "/services/async/26.0";
+    }
+
 
     public void reconnect() throws org.mule.api.ConnectionException {
         try {
