@@ -54,7 +54,7 @@ public class SalesforceBayeuxClient extends BayeuxClient {
      * @param salesforceConnector Salesforce connection
      */
     public SalesforceBayeuxClient(BaseSalesforceConnector salesforceConnector) throws MalformedURLException {
-        super("https://" + (new URL(salesforceConnector.getConnection().getConfig().getServiceEndpoint())).getHost() + "/cometd/26.0",
+        super(generateStreamingApiUrl(salesforceConnector),
                 SalesforceLongPollingTransport.create(salesforceConnector, LONG_POLLING_OPTIONS));
 
         this.salesforceConnector = salesforceConnector;
@@ -87,6 +87,12 @@ public class SalesforceBayeuxClient extends BayeuxClient {
                 }
             }
         });
+    }
+
+    private static String generateStreamingApiUrl(BaseSalesforceConnector salesforceConnector) throws MalformedURLException {
+        final URL baseUrl = new URL(salesforceConnector.getConnection().getConfig().getServiceEndpoint());
+        final String portClause = (baseUrl.getPort() > 0) ? ":" + baseUrl.getPort() : "";
+        return "https://" + baseUrl.getHost() + portClause + "/cometd/26.0";
     }
 
     private void resubscribe() {

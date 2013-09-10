@@ -19,12 +19,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
-import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 
 import com.sforce.async.BatchInfo;
@@ -109,7 +107,7 @@ public class HardDeleteBulkTestCases extends SalesforceTestParent {
 	
 			assertTrue(batchInfo.getState().equals(com.sforce.async.BatchStateEnum.Completed));
 			
-			assertBatchSucessAndCompareSObjectIds(getBatchResult(batchResultFlow), createdSObjectsIds); 
+			assertBatchSuccessAndCompareSObjectIds(getBatchResult(batchResultFlow), createdSObjectsIds);
 		
 		} catch (Exception e) {
 				e.printStackTrace();

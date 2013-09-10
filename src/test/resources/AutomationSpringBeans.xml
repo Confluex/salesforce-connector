@@ -15,6 +15,15 @@
 		</property>
 	</bean>
 
+    <!-- to create dates, like so:
+        <bean factory-bean="dateFormat" factory-method="parse">
+            <constructor-arg value="2013-06-29" />
+        </bean>
+    -->
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
+
 	<!-- get user info -->
 
 	<util:map id="getUserInfoResult" map-class="java.util.HashMap"
@@ -698,12 +707,28 @@
 
 	<!-- upsert-bulk -->
 
+    <util:map id="upsertAccountToRefSObjectMap">
+        <entry key="type" value="Account" />
+        <entry key="sObjectFieldMappingsFromMessage">
+            <util:map>
+                <entry key="Name" value="Amarello" />
+                <entry key="BillingCity" value="San Francisco" />
+                <entry key="Phone" value="3333333333" />
+                <entry key="Website" value="www.amarello.com" />
+            </util:map>
+        </entry>
+    </util:map>
+
 	<util:map id="upsertBulkSObjectToBeUpdated" map-class="java.util.HashMap"
 		key-type="java.lang.String" value-type="java.lang.Object">
-		<entry key="Name" value="Acme" />
-		<entry key="BillingCity" value="San Francisco" />
-		<entry key="Phone" value="111111111" />
-		<entry key="Website" value="www.acme.com" />
+		<entry key="Subject" value="Task to be Updated" />
+		<entry key="Description" value="Task Description" />
+        <entry key="ActivityDate" value="2013-12-25T00:00:00Z" />
+        <!--<entry key="ActivityDate">-->
+            <!--<bean factory-bean="dateFormat" factory-method="parse">-->
+                <!--<constructor-arg value="2013-12-25" />-->
+            <!--</bean>-->
+        <!--</entry>-->
 	</util:map>
 
 	<util:map id="upsertBulkSObjectUpdates" map-class="java.util.HashMap"
@@ -713,10 +738,14 @@
 
 	<util:map id="upsertBulkSObjectToBeInserted" map-class="java.util.HashMap"
 		key-type="java.lang.String" value-type="java.lang.Object">
-		<entry key="Name" value="Amarello" />
-		<entry key="BillingCity" value="San Francisco" />
-		<entry key="Phone" value="111111111" />
-		<entry key="Website" value="www.amarello.com" />
+        <entry key="Subject" value="Task to be Inserted" />
+        <entry key="Description" value="Task Description" />
+        <entry key="ActivityDate" value="2013-12-25T00:00:00Z" />
+        <!--<entry key="ActivityDate">-->
+            <!--<bean factory-bean="dateFormat" factory-method="parse">-->
+                <!--<constructor-arg value="2014-01-01" />-->
+            <!--</bean>-->
+        <!--</entry>-->
 	</util:map>
 
 	<util:list id="upsertBulkObjectsRef">
@@ -726,7 +755,7 @@
 
 	<util:map id="upsertBulkTestData" map-class="java.util.HashMap"
 		key-type="java.lang.String" value-type="java.lang.Object">
-		<entry key="type" value="Account" />
+		<entry key="type" value="Task" />
 		<entry key="sObjectFieldMappingsFromMessage" value-ref="upsertBulkSObjectToBeUpdated" />
 		<entry key="externalIdFieldName" value="Id" />
 		<entry key="objectsRef" value-ref="upsertBulkObjectsRef" />
